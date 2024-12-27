@@ -38,7 +38,7 @@ export const DiscoverWalletProviders = ({handleDetectedWallet}: {handleDetectedW
                 ))}
                 {/* <hr /> */}
                 {/* <h2>{userAccount ? "" : "No "}Wallet Selected</h2> */}
-                {userAccount &&
+                {/* {userAccount &&
                   <div>
                     <div>
                       <img src={selectedWallet.info.icon} alt={selectedWallet.info.name} />
@@ -46,7 +46,7 @@ export const DiscoverWalletProviders = ({handleDetectedWallet}: {handleDetectedW
                       <div>({formatAddress(userAccount)})</div>
                     </div>
                   </div>
-                }
+                } */}
               </div>
                :
                 <div className="border py-2 px-4 rounded-full text-sm">
