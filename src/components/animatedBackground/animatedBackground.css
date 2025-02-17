@@ -1,0 +1,54 @@
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    width: 400px;
+    height: 400px;
+    animation: float 15s ease-in-out infinite;
+    background: radial-gradient(circle at center, currentColor 0%, transparent 70%);
+}
+
+.blob:nth-child(1) {
+    color: #213547;
+    top: 10%;
+    left: 20%;
+    animation-delay: -2s;
+    width: 500px;
+    height: 500px;
+}
+
+.blob:nth-child(2) {
+    color: #646cff;
+    top: 40%;
+    left: 60%;
+    animation-delay: -5s;
+    width: 450px;
+    height: 450px;
+}
+
+.blob:nth-child(3) {
+    color: #213547;
+    top: 60%;
+    left: 30%;
+    animation-delay: -8s;
+    width: 600px;
+    height: 600px;
+}
+
+@keyframes float {
+    0% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+    }
+    25% {
+        transform: translate(150px, -100px) scale(1.2) rotate(90deg);
+    }
+    50% {
+        transform: translate(-100px, 150px) scale(0.8) rotate(180deg);
+    }
+    75% {
+        transform: translate(100px, 100px) scale(1.1) rotate(270deg);
+    }
+    100% {
+        transform: translate(0, 0) scale(1) rotate(360deg);
+    }
+}
+

@@ -1,39 +1,61 @@
-import { formatBalance } from "../utils/format-utils";
+import { formatAddress, formatBalance } from "../utils/format-utils";
+import CopyButton from "./copy-button";
+import { formatDistanceToNow } from 'date-fns';
 
-function TransactionList({transactions, filterString}) {
+function TransactionList({transactions}) {
 
     if (!transactions) return null;
-
-
-    const filteredTransactions = filterString.trim().length === 0 ? transactions :
-        transactions.filter(t => t.hash.toLocaleLowerCase().search(filterString.trim().toLocaleLowerCase()) > -1);
 
     return (
         <>
             <div className="w-full my-4">
-                <table className="w-full table-auto">
-                    <thead>
-                        <tr>
-                            <th>Hash</th>
-                            <th>From</th>
-                            <th>To</th>
-                            <th>Value</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredTransactions.map(t => {
-                            return(
-                                <tr key={t.hash} className="border-t border-collapse">
-                                    <td className="text-left truncate p-2">{t.hash}</td>
-                                    <td className="text-left truncate p-2">{t.from_address}</td>
-                                    <td className="text-left truncate p-2">{t.to_address}</td>
-                                    <td className="text-left truncate p-2">{formatBalance(t.value)}ETH</td>
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-                </table>
+                {transactions.length == 0 ? 
+                    <div className="flex items-center justify-center pb-4">
+                        <span>No Transactions found.</span> 
+                    </div>
+                : 
+                    <table className="w-full table-auto max-w-full">
+                        <thead>
+                            <tr>
+                                <th className="text-sm text-left pl-4">Hash</th>
+                                <th className="text-sm text-left pl-4">Age</th>
+                                <th className="text-sm text-left pl-4">From</th>
+                                <th className="text-sm text-left pl-4">To</th>
+                                <th className="text-sm text-left pl-4">Value</th> 
+                                <th className="text-sm text-left pl-4">Fee</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {transactions.map(t => {
+                                return(
+                                    <tr key={t.hash} className="border-t border-collapse border-accent-border py-4 hover:bg-button-black">
+                                        <td className="text-left p-4 max-w-28">
+                                            <div className="flex items-center gap-2">
+                                                <p className="truncate">{t.hash}</p>
+                                                <CopyButton value={t.hash} />
+                                            </div>
+                                        </td>
+                                        <td className="text-left truncate p-4 max-w-28">{formatDistanceToNow(t.block_timestamp)}</td>
+                                        <td className="text-left p-4 max-w-28 ">
+                                            <div className="flex items-center gap-2">
+                                                <p className="truncate">{t.from_address_label || t.from_address}</p>
+                                                <CopyButton value={t.from_address} />
+                                            </div>
+                                        </td>
+                                        <td className="text-left p-4  max-w-28 ">
+                                            <div className="flex items-center gap-2">
+                                                <p className="truncate">{t.to_address_label || t.to_address}</p>
+                                                <CopyButton value={t.from_address} />
+                                            </div>
+                                        </td>
+                                        <td className="text-left truncate p-4">{formatBalance(t.value)}ETH</td>
+                                        <td className="text-left truncate p-4">{formatBalance(t.transaction_fee, 10)}ETH</td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                }
             </div>
         </>
     )

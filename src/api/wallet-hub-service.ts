@@ -1,8 +1,8 @@
 /* eslint-disable */
 
 import axios from 'axios';
-import { tokensResponse } from './tokens-response';
-import { transactionsResponse } from './transactions-response';
+// import { tokensResponse } from './tokens-response';
+// import { transactionsResponse } from './transactions-response';
 import { chainsResponse } from './chains-response';
 
 const BASE_URL = import.meta.env.VITE_API_WALLET_HUB_SERVICE_URL;
@@ -50,7 +50,23 @@ export const WalletApi = {
         )
         return res;
     },
+    getWalletNetWorth: async(walletAddress: string, chain_id?: string) : Promise<any> => {
+        const response = client.post(`/wallet/net-worth`,
+            {
+                'walletAddress': walletAddress,
+                'chain_id': chain_id,
+            }
+        )
+        .then((res) => {
+            return res.data;
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+        return response;
+    },
     getWalletTransactions: async(walletAddress: string, chain_id?: string) => {
+        // return transactionsResponse;
         const res = client.post(`/wallet/transactions`,
             {
                 'walletAddress': walletAddress,
@@ -75,5 +91,5 @@ export const WalletApi = {
         //     return res.data;
         // })
         // return res;
-    }
+    },
 }

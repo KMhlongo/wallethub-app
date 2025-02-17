@@ -1,20 +1,36 @@
 import { WalletInfo } from "../types/walletInfo";
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+import CopyButton from "./copy-button";
+import { formatAddress } from "../utils/format-utils";
 
-function WalletDetail({walletAddress, walletInfo} : {walletAddress: string, walletInfo?: WalletInfo}) {
-
-    if (!walletInfo) return null;
+function WalletDetail({walletInfo, isLoading} : {walletInfo?: WalletInfo, isLoading: boolean}) {
 
     return(
-        <div className="p-2">
-            <h2 className="font-semibold text-left">Overview</h2>
-            <div className="flex py-2">
-                <div className="flex flex-col items-start">
-                    <span className="text-sm font-medium">Wallet Address</span>
-                    <span className="text-sm">{walletAddress}</span>
+        <div>
+            <div className="flex py-2 items-center">
+                <div className="flex flex-col items-start p-4 rounded">
+                    <span className="text-md font-medium opacity-60">Wallet Address</span>
+                    {walletInfo &&
+                        <div className="flex items-center">
+                            <span className="text-lg mr-2">{formatAddress(walletInfo?.address)}</span>
+                            {walletInfo?.address &&
+                                <CopyButton value={walletInfo?.address} />
+                            }
+                        </div>
+                    }
                 </div>
-                <div className="flex flex-col ml-6 items-start">
-                    <span className="text-sm font-medium">Balance</span>
-                    <span className="text-sm">{walletInfo?.balance}</span>
+                <div className="flex flex-col ml-6 items-start p-2">
+                    <span className="text-md font-medium opacity-60">Balance</span>
+                    { isLoading ? 
+                        <Skeleton width={170}
+                            height={15}
+                        /> : 
+                        <span className="text-lg">{walletInfo?.balance}</span>}
+                </div>
+                <div className="flex flex-col ml-6 items-start p-2">
+                    <span className="text-md font-medium opacity-60">Net Worth</span>
+                    <span className="text-lg">${walletInfo?.netWorth}</span>
                 </div>
             </div>
         </div>

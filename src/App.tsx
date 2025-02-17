@@ -11,20 +11,21 @@ import { WalletInfo } from './types/walletInfo'
 import WalletDashboard from './components/WalletDashboard'
 
 function App() {
-  const [walletAddress, setWalletAddress] = useState<string>('');
   const [inputAddress, setInputAddress] = useState<string>('');
   const [walletInfo, setWalletInfo] = useState<WalletInfo>();
   const [error, setError] = useState<boolean>(false);
+  const [isProviderWallet, setProviderWallet] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // function to set the wallet to value from the search bar
   async function handleWalletSearch() {
-    setWalletAddress(inputAddress);
+    setProviderWallet(false);
     changeWalletAddress(inputAddress);
   }
 
   //function to set the wallet from the detected wallets of the browser
   async function handleDetectedWallet(address: string) {
-    setWalletAddress(address);
+    setProviderWallet(true);
     changeWalletAddress(address);
   }
 
@@ -62,7 +63,7 @@ function App() {
   }
 
   const changeWalletAddress = async(address: string) => {
-    
+    setIsLoading(true);
     try {
       const [
         balanceResponse, 
@@ -87,6 +88,8 @@ function App() {
       console.log(`error retrieving wallet data: ${err}`)
       setError(true);
       setWalletInfo(undefined);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -98,7 +101,7 @@ function App() {
         </div>
         <span className='text-xl'>wallethub</span>
         <div className='ml-auto'>
-          <DiscoverWalletProviders handleDetectedWallet={handleDetectedWallet}/>
+          <DiscoverWalletProviders handleDetectedWallet={handleDetectedWallet} isProviderWallet={isProviderWallet}/>
         </div>
       </div>
       <div className='flex py-2'>
@@ -108,9 +111,9 @@ function App() {
         />
         <button onClick={handleWalletSearch} className='rounded-full text-sm ml-2'>Search</button>
       </div>
-      <WalletDetail walletAddress={walletAddress} walletInfo={walletInfo}/>
-      <hr></hr>
-      <WalletDashboard walletInfo={walletInfo} changeSelectedChain={changeSelectedChain}/>
+        <WalletDetail walletInfo={walletInfo} isLoading={isLoading}/>
+        <hr></hr>
+        <WalletDashboard walletInfo={walletInfo} isLoading={isLoading} changeSelectedChain={changeSelectedChain}/>
     </>
   )
 }

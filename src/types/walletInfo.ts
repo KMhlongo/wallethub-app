@@ -7,6 +7,7 @@ export interface WalletInfo {
     address?: string,
     activeChains?: Chain[],
     selectedChain?: string,
+    netWorth?: string,
 }
 
 export interface Chain {

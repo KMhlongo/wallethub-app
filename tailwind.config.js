@@ -7,7 +7,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        'accent-blue': '#646cff'
+        'accent-blue': '#646cff',
+        'button-black': '#1a1a1a',
+        'accent-border': '#27272a',
       }
     },
   },
