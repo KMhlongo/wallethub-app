@@ -10,6 +10,7 @@ export default {
         'accent-blue': '#646cff',
         'button-black': '#1a1a1a',
         'accent-border': '#27272a',
+        'dark-bg': '#09090b',
       }
     },
   },

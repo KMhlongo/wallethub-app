@@ -21,9 +21,9 @@ function CopyButton({value}: {value: string}) {
                 viewBox="0 0 24 24" 
                 fill="none" 
                 stroke="currentColor" 
-                stroke-width="1.75" 
-                stroke-linecap="round" 
-                stroke-linejoin="round" 
+                strokeWidth="1.75" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
                 className="lucide lucide-clipboard stroke-white transition-colors opacity-40 hover:opacity-100"
                 onClick={handleCopy}
             >

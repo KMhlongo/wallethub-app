@@ -1,5 +1,5 @@
 import { formatAddress, formatBalance } from "../utils/format-utils";
-import CopyButton from "./copy-button";
+import CopyButton from "../elements/copy-button";
 import { formatDistanceToNow } from 'date-fns';
 
 function TransactionList({transactions}) {

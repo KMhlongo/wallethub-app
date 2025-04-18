@@ -2,6 +2,7 @@ import { useState } from "react";
 import TokenList from "./TokenList";
 import { WalletInfo } from "../types/walletInfo"
 import TransactionList from "./TransactionList";
+import LoadingSpinner from "../elements/loading-spinner";
 
 function WalletDashboard({walletInfo, changeSelectedChain, isLoading} : {walletInfo?: WalletInfo, changeSelectedChain: any, isLoading: boolean}) {
 
@@ -10,9 +11,14 @@ function WalletDashboard({walletInfo, changeSelectedChain, isLoading} : {walletI
 
     if (!walletInfo) return null;
 
+    console.log(`isLoading is set to ${isLoading}`);
+
+    if (isLoading) 
+        return <LoadingSpinner />
+
     return (
         <div className="border border-accent-border rounded-md">
-            <div className="flex p-4">
+            <div className="flex p-4 mb-4">
                 {walletInfo.activeChains?.length === 0 ? 
                     <select disabled className="mr-2 px-2 pr-4 rounded-lg  text-sm">
                         <option>No Active Chains</option>

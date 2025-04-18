@@ -2,15 +2,22 @@ import { useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css';
 import { formatAddress, formatDollarBalance } from "../utils/format-utils";
-import CopyButton from "./copy-button";
+import CopyButton from "../elements/copy-button";
 
 function TokenList({tokens, filterString, isLoading} : {tokens: any, filterString: string, isLoading: boolean}) {
-    const [tokenDetailOpened, toggleTokenDetail] = useState<boolean>(false); 
-
+ 
     if (!tokens) return null;
 
     const filteredTokens = filterString?.trim().length === 0 ? 
         tokens : tokens.filter(token => token.name.toLocaleLowerCase().search(filterString.trim().toLocaleLowerCase()) > -1);
+
+    if (filteredTokens.length == 0 || filteredTokens.length == 1 && tokens[0].usd_value == 0) {
+        return(
+            <div className="flex items-center justify-center pb-4 mb-4">
+                <span>No Tokens found.</span> 
+            </div>
+        )
+    }
 
     return(
         <>

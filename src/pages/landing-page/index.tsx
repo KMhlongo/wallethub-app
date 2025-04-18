@@ -1,8 +1,6 @@
 import { useNavigate } from "react-router";
 import AnimatedBackground from "../../components/animatedBackground";
-import { Logo } from "../../components/Logo";
 import { FormEvent, FormEventHandler, useState } from "react";
-import { WalletProviders } from "../../components/WalletProviders";
 import Navbar from "../../components/navbar";
 
 function LandingPage() {
@@ -28,9 +26,8 @@ function LandingPage() {
             <AnimatedBackground />
             <div className="flex flex-col items-stretch justify-center pt-36">
                 <div className="flex items-center justify-center">
-                    <div className="text-2xl mt-12 w-1/2 text-center opacity-90">
-                        Explore your crypto portfolio across multiple chains 
-                        with a comprehensive view of all your tokens and transactions in one place
+                    <div className="text-6xl mt-12 w-4/6 text-center opacity-100">
+                        explore your crypto portfolio across multiple chains in one place
                     </div>
                 </div>
                 <div className="mt-12">
@@ -46,7 +43,7 @@ function LandingPage() {
                                     onChange={(e) => {setInputAddress(e.target.value)}}
                             />
                             <button type="submit" className="rounded-full flex ml-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <circle cx="11" cy="11" r="8"/>
                                     <path d="m21 21-4.3-4.3"/>
                                 </svg>

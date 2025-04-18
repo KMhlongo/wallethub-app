@@ -1,12 +1,16 @@
 import { WalletInfo } from "../types/walletInfo";
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import CopyButton from "./copy-button";
+import CopyButton from "../elements/copy-button";
 import { formatAddress } from "../utils/format-utils";
 
 function WalletDetail({walletInfo, isLoading} : {walletInfo?: WalletInfo, isLoading: boolean}) {
 
-    return(
+    if (isLoading) {
+        return <></>;
+    }
+
+    return(        
         <div>
             <div className="flex py-2 items-center">
                 <div className="flex flex-col items-start p-4 rounded">
@@ -22,11 +26,7 @@ function WalletDetail({walletInfo, isLoading} : {walletInfo?: WalletInfo, isLoad
                 </div>
                 <div className="flex flex-col ml-6 items-start p-2">
                     <span className="text-md font-medium opacity-60">Balance</span>
-                    { isLoading ? 
-                        <Skeleton width={170}
-                            height={15}
-                        /> : 
-                        <span className="text-lg">{walletInfo?.balance}</span>}
+                    <span className="text-lg">{walletInfo?.balance}</span>
                 </div>
                 <div className="flex flex-col ml-6 items-start p-2">
                     <span className="text-md font-medium opacity-60">Net Worth</span>

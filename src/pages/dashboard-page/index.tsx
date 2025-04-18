@@ -6,13 +6,14 @@ import { WalletApi } from "../../api/wallet-hub-service";
 import { formatEthersBalance } from "../../utils/format-utils";
 import WalletDashboard from "../../components/WalletDashboard";
 import Navbar from "../../components/navbar";
-import { add } from "date-fns";
+import LoadingSpinner from "../../elements/loading-spinner";
 
-function WalletHome() {
+function DashBoardPage() {
 
     const [searchParams] = useSearchParams();
     const [walletAddress, setProviderWalletAddress] = useState<string>('');
     const [walletInfo, setWalletInfo] = useState<WalletInfo>();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     async function changeSelectedChain(e: any) {
         console.log(`selected chain ${e.target.value}`);
@@ -45,6 +46,7 @@ function WalletHome() {
     }
 
     async function getWalletInfo() {
+        setIsLoading(true);
         const address = searchParams.get("walletAddress") as string;
         try {
             const [
@@ -68,10 +70,11 @@ function WalletHome() {
                 activeChains: activeChainsResponse,
                 netWorth: netWorthResponse.chains[0].networth_usd,
             })
-            console.log(`net Worth: ${JSON.stringify(netWorthResponse.chains[0].networth_usd)}`)
         } catch (error) {
             console.log(error);
             setWalletInfo(undefined);
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -82,29 +85,33 @@ function WalletHome() {
     )
 
     return(
-        <>
+        <div className="flex flex-col min-h-screen">
             <Navbar />
-            <div className="">
-                <div className="p-2 py-4"> 
-                    <input type="text" 
-                            name="walletAddress"
-                            placeholder="Search for Wallet Address" 
-                            autoComplete='false'
-                            spellCheck='false'
-                            className={`w-1/3 rounded-md border border-accent-border py-1 px-4 text-md focus-visible:outline-none`}
-                            // value={inputAddress}
-                            // onChange={(e) => {setInputAddress(e.target.value)}}
-                                />
-                </div>
+            {isLoading ?  
+                <LoadingSpinner /> :
                 <div className="">
-                    <WalletDetail walletInfo={walletInfo} isLoading={false}/>
+                    <div className="p-2 py-4"> 
+                        <input type="text" 
+                                name="walletAddress"
+                                placeholder="Search for Wallet Address" 
+                                autoComplete='false'
+                                spellCheck='false'
+                                className={`w-1/3 rounded-md border border-accent-border py-1 px-4 text-md focus-visible:outline-none`}
+                                // value={inputAddress}
+                                // onChange={(e) => {setInputAddress(e.target.value)}}
+                                    />
+                    </div>
+                    <div className="">
+                        <WalletDetail walletInfo={walletInfo} isLoading={isLoading}/>
+                    </div>
+                    <div className="p-2 mt-2">
+                        <WalletDashboard walletInfo={walletInfo} changeSelectedChain={changeSelectedChain} isLoading={isLoading}/>
+                    </div>
                 </div>
-                <div className="p-2 mt-2">
-                    <WalletDashboard walletInfo={walletInfo} changeSelectedChain={changeSelectedChain} isLoading={false}/>
-                </div>
-            </div>
-        </>
+            }
+            
+        </div>
     )
 }
 
-export default WalletHome;
+export default DashBoardPage;
